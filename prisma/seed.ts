@@ -17,6 +17,7 @@ async function seed() {
           {
             title: "To Do",
             order: 0,
+            color: "blue",
             tasks: {
               create: [
                 {
@@ -29,6 +30,7 @@ async function seed() {
           {
             title: "In Progress",
             order: 1,
+            color: "yellow",
             tasks: {
               create: [
                 {
@@ -41,6 +43,7 @@ async function seed() {
           {
             title: "Done",
             order: 2,
+            color: "green",
             tasks: {
               create: [
                 {

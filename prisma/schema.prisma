@@ -94,6 +94,7 @@ model Column {
   id String @id @default(cuid())
   title String
   order Int @default(0)
+  color String 
 
   boardId String
   board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
