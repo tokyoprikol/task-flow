@@ -1,3 +1,4 @@
+import CreateNewBoard from "@/components/create-new-board";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,34 +11,29 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import prisma from "@/lib/prisma";
+import Link from "next/link";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const boards = await prisma.board.findMany();
+  console.log(boards);
+
   return (
     <div className="flex-1 space-y-5 px-10 py-5">
       <h1 className="text-4xl font-bold">Your Boards:</h1>
       <div className="space-y-5">
-        <span className="text-neutral-400 italic">No boards found.</span>
-        <div className="flex w-full justify-center">
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button>Create new board</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle className="text-2xl">New Board</DialogTitle>
-                <DialogDescription>Give this board a name</DialogDescription>
-              </DialogHeader>
-              <div>
-                <Input placeholder="My Board" />
+        {boards.length === 0 && (
+          <span className="text-neutral-400 italic">No boards found.</span>
+        )}
+        <div className="flex items-center gap-10">
+          {boards.map((board) => (
+            <Link key={board.id} href={`dashboard/${board.id}`}>
+              <div className="rounded-lg border-2 p-10 text-2xl font-bold">
+                {board.title}
               </div>
-              <DialogFooter>
-                <Button size={"sm"}>Create</Button>
-                <DialogClose>
-                  <Button variant={"outline"}>Cancel</Button>
-                </DialogClose>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+            </Link>
+          ))}
+          <CreateNewBoard />
         </div>
       </div>
     </div>
