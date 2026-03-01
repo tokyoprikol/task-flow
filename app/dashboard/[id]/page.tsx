@@ -1,12 +1,8 @@
-import { Button } from "@/components/ui/button";
+import AddColumnDialog from "@/components/board-components/add-column-dialog";
+import AddTaskDialog from "@/components/board-components/add-task-dialog";
+import TaskMenu from "@/components/board-components/task-menu";
+import { COLUMN_COLORS_MAP } from "@/lib/map-configs";
 import prisma from "@/lib/prisma";
-import { Plus, Trash2 } from "lucide-react";
-
-const COLOR_MAP: Record<string, string> = {
-  blue: "border-t-blue-400",
-  yellow: "border-t-yellow-400",
-  green: "border-t-green-400",
-};
 
 export default async function BoardPage({
   params,
@@ -30,23 +26,23 @@ export default async function BoardPage({
   return (
     <div className="flex-1 space-y-10 px-10 py-5">
       <h1 className="text-4xl font-bold">{board?.title}</h1>
+      <AddColumnDialog />
+
       <div className="flex justify-center gap-10">
         {board?.columns.map((col) => (
           <div key={col.id} className="w-full space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-semibold">{col.title} </h1>
+                <h1 className="text-2xl font-bold">{col.title} </h1>
                 <span className="rounded-full bg-neutral-200 px-3.5 py-2 text-xs font-bold dark:bg-neutral-800">
                   {col.tasks.length}
                 </span>
               </div>
 
-              <Button size={"icon"} variant={"secondary"}>
-                <Plus className="size-5" />
-              </Button>
+              <AddTaskDialog />
             </div>
             <div
-              className={`min-h-120 gap-3 rounded-lg border-2 border-t-10 ${COLOR_MAP[col.color]} bg-neutral-50 p-7 dark:bg-neutral-900/40`}
+              className={`min-h-120 gap-3 rounded-lg border-2 border-t-10 ${COLUMN_COLORS_MAP[col.color]} bg-neutral-50 p-7 dark:bg-neutral-900/40`}
             >
               {col.tasks.map((task) => (
                 <div
@@ -55,9 +51,7 @@ export default async function BoardPage({
                 >
                   {task.title}
 
-                  <Button size={"icon"} variant={"outline"}>
-                    <Trash2 />
-                  </Button>
+                  <TaskMenu />
                 </div>
               ))}
             </div>

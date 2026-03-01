@@ -1,16 +1,19 @@
 import { Layers } from "lucide-react";
 import { Button } from "./ui/button";
 import ChangeTheme from "./change-theme";
+import Link from "next/link";
 
 export default function Header() {
   return (
     <div className="flex justify-between border-b px-10 py-5">
-      <div className="flex items-center justify-center gap-2 text-xl font-semibold">
-        <Button size={"icon"}>
-          <Layers className="size-6" />
-        </Button>
-        TaskFlow
-      </div>
+      <Link href={"/"}>
+        <div className="flex items-center justify-center gap-2 text-xl font-semibold">
+          <Button size={"icon"}>
+            <Layers className="size-6" />
+          </Button>
+          TaskFlow
+        </div>
+      </Link>
       <div className="flex items-center gap-3">
         <ChangeTheme />
         <Button variant={"outline"}>Sign In</Button>

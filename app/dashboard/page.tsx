@@ -1,16 +1,4 @@
-import CreateNewBoard from "@/components/create-new-board";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import AddBoardDialog from "@/components/board-components/add-board-dialog";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 
@@ -28,12 +16,12 @@ export default async function Dashboard() {
         <div className="flex items-center gap-10">
           {boards.map((board) => (
             <Link key={board.id} href={`dashboard/${board.id}`}>
-              <div className="rounded-lg border-2 p-10 text-2xl font-bold">
+              <div className="rounded-lg border-2 p-10 text-2xl font-bold transition hover:shadow-lg">
                 {board.title}
               </div>
             </Link>
           ))}
-          <CreateNewBoard />
+          <AddBoardDialog />
         </div>
       </div>
     </div>

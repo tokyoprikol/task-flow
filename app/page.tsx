@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CircleCheckBig, Shield, Zap } from "lucide-react";
+import Link from "next/link";
 
 const CARDS_BENEFITS = [
   {
@@ -27,7 +28,7 @@ export default function Home() {
           <h1 className="text-6xl">TaskFlow</h1>
           <h3 className="text-4xl">Your tasks. In flow.</h3>
         </div>
-        <div className="text-center text-neutral-300">
+        <div className="text-center text-neutral-400">
           <h4>Kanban board meets intelligent calendar.</h4>
           <h4>
             See progress at a glance. Plan your day without switching tabs.
@@ -35,19 +36,23 @@ export default function Home() {
           </h4>
         </div>
         <div>
-          <Button>
-            Get Started
-            <ArrowRight />
-          </Button>
+          <Link href="/dashboard">
+            <Button>
+              Get Started
+              <ArrowRight />
+            </Button>
+          </Link>
         </div>
       </div>
       <div className="flex items-center gap-10">
         {CARDS_BENEFITS.map((card) => (
           <div
             key={card.title}
-            className="flex max-w-80 flex-col items-start gap-2 rounded-lg border p-5 shadow-neutral-900 transition hover:shadow-lg"
+            className="flex max-w-80 flex-col items-start gap-2 rounded-lg border p-5 transition hover:shadow-xl"
           >
-            <div className="rounded-lg bg-neutral-800 p-2">{card.icon}</div>
+            <div className="rounded-lg bg-neutral-200 p-2 dark:bg-neutral-800">
+              {card.icon}
+            </div>
             <div className="text-2xl font-semibold">{card.title}</div>
             <div className="text-neutral-400">{card.desc}</div>
           </div>
