@@ -1,10 +1,16 @@
-import AddBoardDialog from "@/components/board-components/add-board-dialog";
-import { BOARD_COLORS_MAP } from "@/lib/map-configs";
-import prisma from "@/lib/prisma";
 import Link from "next/link";
+import AddBoardDialog from "@/components/board-components/add-board-dialog";
+import DeleteBoardMenu from "@/components/board-components/delete-board-menu";
+import prisma from "@/lib/prisma";
+import { CalendarDays } from "lucide-react";
+import { BOARD_COLORS_MAP } from "@/lib/configs/map-configs";
 
 export default async function Dashboard() {
-  const boards = await prisma.board.findMany();
+  const boards = await prisma.board.findMany({
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
   console.log(boards);
 
   return (
@@ -18,9 +24,18 @@ export default async function Dashboard() {
           {boards.map((board) => (
             <Link key={board.id} href={`dashboard/${board.id}`}>
               <div
-                className={`w-50 rounded-lg border-3 py-10 text-center text-2xl font-bold transition hover:shadow-lg ${BOARD_COLORS_MAP[board.color.toLowerCase()]} `}
+                className={`flex h-50 w-70 flex-col items-center justify-center rounded-lg border-3 p-5 text-2xl font-bold transition hover:shadow-lg ${BOARD_COLORS_MAP[board.color.toLowerCase()]} `}
               >
-                {board.title}
+                <span>{board.title}</span>
+
+                <span className="flex items-center gap-2 text-sm text-neutral-400">
+                  <CalendarDays />
+                  {board.createdAt.toLocaleString("en-US", {
+                    dateStyle: "short",
+                    timeStyle: "short",
+                  })}
+                  <DeleteBoardMenu id={board.id} />
+                </span>
               </div>
             </Link>
           ))}

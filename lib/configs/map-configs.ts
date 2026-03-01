@@ -5,7 +5,7 @@ export const COLORS_MAP = [
   { name: "Orange", color: `bg-orange-${shade}` },
   { name: "Yellow", color: `bg-yellow-${shade}` },
   { name: "Green", color: `bg-green-${shade}` },
-  { name: "Sky", color: `bg-blue-${shade}` },
+  { name: "Sky", color: `bg-blue-300` },
   { name: "Blue", color: `bg-blue-${shade}` },
   { name: "Purple", color: `bg-purple-${shade}` },
 ];

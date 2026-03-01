@@ -21,9 +21,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { COLORS_MAP } from "@/lib/map-configs";
+import { COLORS_MAP } from "@/lib/configs/map-configs";
 import { useState } from "react";
-import { addNewBoard } from "@/lib/actions/add-new-board";
+import { addNewBoard } from "@/lib/actions/board-actions";
+import { Plus } from "lucide-react";
 
 export default function AddBoardDialog() {
   const [title, setTitle] = useState("");
@@ -40,7 +41,9 @@ export default function AddBoardDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Create new board</Button>
+        <Button variant={"outline"} className="h-50 w-70">
+          <Plus className="size-8" />
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

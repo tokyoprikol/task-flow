@@ -13,3 +13,13 @@ export async function addNewBoard(title: string, color: string) {
 
   revalidatePath("/dashboard");
 }
+
+export async function deleteBoard(id: string) {
+  await prisma.board.delete({
+    where: {
+      id,
+    },
+  });
+
+  revalidatePath("/dashboard");
+}

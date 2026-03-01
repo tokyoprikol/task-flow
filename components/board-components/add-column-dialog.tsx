@@ -19,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { COLORS_MAP } from "@/lib/map-configs";
+import { COLORS_MAP } from "@/lib/configs/map-configs";
 
 export default function AddColumnDialog() {
   return (

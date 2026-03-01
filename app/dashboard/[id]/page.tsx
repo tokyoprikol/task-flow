@@ -1,7 +1,7 @@
 import AddColumnDialog from "@/components/board-components/add-column-dialog";
 import AddTaskDialog from "@/components/board-components/add-task-dialog";
 import TaskMenu from "@/components/board-components/task-menu";
-import { COLUMN_COLORS_MAP } from "@/lib/map-configs";
+import { COLUMN_COLORS_MAP } from "@/lib/configs/map-configs";
 import prisma from "@/lib/prisma";
 
 export default async function BoardPage({
