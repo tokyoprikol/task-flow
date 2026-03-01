@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dialog,
   DialogClose,
@@ -20,10 +22,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { COLORS_MAP } from "@/lib/map-configs";
+import { useState } from "react";
+import { addNewBoard } from "@/lib/actions/add-new-board";
 
 export default function AddBoardDialog() {
+  const [title, setTitle] = useState("");
+  const [color, setColor] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleCreate = async () => {
+    await addNewBoard(title, color);
+    setIsOpen(false);
+    setTitle("");
+    setColor("");
+  };
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button>Create new board</Button>
       </DialogTrigger>
@@ -33,8 +48,13 @@ export default function AddBoardDialog() {
           <DialogDescription>Give this board a name</DialogDescription>
         </DialogHeader>
         <div className="flex items-center gap-2">
-          <Input placeholder="My Board" />
-          <Select>
+          <Input
+            placeholder="My Board"
+            required
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <Select value={color} onValueChange={setColor}>
             <SelectTrigger>
               <SelectValue placeholder="Select a color" />
             </SelectTrigger>
@@ -54,7 +74,7 @@ export default function AddBoardDialog() {
           <DialogClose asChild>
             <Button variant={"outline"}>Cancel</Button>
           </DialogClose>
-          <Button>Create</Button>
+          <Button onClick={handleCreate}>Create</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

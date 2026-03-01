@@ -1,4 +1,5 @@
 import AddBoardDialog from "@/components/board-components/add-board-dialog";
+import { BOARD_COLORS_MAP } from "@/lib/map-configs";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 
@@ -16,7 +17,9 @@ export default async function Dashboard() {
         <div className="flex items-center gap-10">
           {boards.map((board) => (
             <Link key={board.id} href={`dashboard/${board.id}`}>
-              <div className="rounded-lg border-2 p-10 text-2xl font-bold transition hover:shadow-lg">
+              <div
+                className={`w-50 rounded-lg border-3 py-10 text-center text-2xl font-bold transition hover:shadow-lg ${BOARD_COLORS_MAP[board.color.toLowerCase()]} `}
+              >
                 {board.title}
               </div>
             </Link>

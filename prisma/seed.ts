@@ -12,6 +12,7 @@ async function seed() {
   await prisma.board.create({
     data: {
       title: "My Board",
+      color: "green",
       columns: {
         create: [
           {
