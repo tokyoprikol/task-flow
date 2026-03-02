@@ -1,3 +1,5 @@
+"use client";
+
 import { MoreVertical, Edit, ArrowUp, ArrowDown, Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import {
@@ -6,12 +8,25 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { deleteTask } from "@/lib/actions/task-actions";
 
-export default function TaskMenu() {
+export default function TaskMenu({
+  taskId,
+  boardId,
+}: {
+  taskId: string;
+  boardId: string;
+}) {
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    await deleteTask(taskId, boardId);
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={"ghost"} size={"icon"}>
+        <Button variant={"ghost"} size={"icon-xs"}>
           <MoreVertical className="size-5" />
         </Button>
       </DropdownMenuTrigger>
@@ -28,7 +43,7 @@ export default function TaskMenu() {
           <ArrowDown />
           Move Down
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleDelete}>
           <Trash2 />
           Delete
         </DropdownMenuItem>

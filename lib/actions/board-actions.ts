@@ -15,11 +15,15 @@ export async function addNewBoard(title: string, color: string) {
 }
 
 export async function deleteBoard(id: string) {
-  await prisma.board.delete({
-    where: {
-      id,
-    },
-  });
+  try {
+    await prisma.board.delete({
+      where: {
+        id,
+      },
+    });
+  } catch (e) {
+    alert(e);
+  }
 
   revalidatePath("/dashboard");
 }

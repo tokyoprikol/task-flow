@@ -1,31 +1,29 @@
-const shade = 500;
-
 export const COLORS_MAP = [
-  { name: "Red", color: `bg-red-${shade}` },
-  { name: "Orange", color: `bg-orange-${shade}` },
-  { name: "Yellow", color: `bg-yellow-${shade}` },
-  { name: "Green", color: `bg-green-${shade}` },
+  { name: "Red", color: `bg-red-500` },
+  { name: "Orange", color: `bg-orange-500` },
+  { name: "Yellow", color: `bg-yellow-500` },
+  { name: "Green", color: `bg-green-500` },
   { name: "Sky", color: `bg-blue-300` },
-  { name: "Blue", color: `bg-blue-${shade}` },
-  { name: "Purple", color: `bg-purple-${shade}` },
+  { name: "Blue", color: `bg-blue-500` },
+  { name: "Purple", color: `bg-purple-500` },
 ];
 
 export const COLUMN_COLORS_MAP: Record<string, string> = {
-  red: `border-t-red-${shade}`,
-  orange: `border-t-orange-${shade}`,
-  yellow: `border-t-yellow-${shade}`,
-  green: `border-t-green-${shade}`,
+  red: `border-t-red-500`,
+  orange: `border-t-orange-500`,
+  yellow: `border-t-yellow-500`,
+  green: `border-t-green-500`,
   sky: `border-t-blue-300`,
-  blue: `border-t-blue-${shade}`,
-  purple: `border-t-purple-${shade}`,
+  blue: `border-t-blue-500`,
+  purple: `border-t-purple-500`,
 };
 
 export const BOARD_COLORS_MAP: Record<string, string> = {
-  red: `border-red-${shade}`,
-  orange: `border-orange-${shade}`,
-  yellow: `border-yellow-${shade}`,
-  green: `border-green-${shade}`,
+  red: `border-red-500`,
+  orange: `border-orange-500`,
+  yellow: `border-yellow-500`,
+  green: `border-green-500`,
   sky: `border-blue-300`,
-  blue: `border-blue-${shade}`,
-  purple: `border-purple-${shade}`,
+  blue: `border-blue-500`,
+  purple: `border-purple-500`,
 };

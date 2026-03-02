@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dialog,
   DialogClose,
@@ -20,13 +22,31 @@ import {
   SelectValue,
 } from "../ui/select";
 import { COLORS_MAP } from "@/lib/configs/map-configs";
+import { addColumn } from "@/lib/actions/column-actions";
+import { useState } from "react";
 
-export default function AddColumnDialog() {
+export default function AddColumnDialog({
+  boardId,
+}: {
+  boardId: string | undefined;
+}) {
+  const [title, setTitle] = useState("");
+  const [color, setColor] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleCreate = async () => {
+    if (boardId) await addColumn(title, color, boardId);
+
+    setIsOpen(false);
+    setTitle("");
+    setColor("");
+  };
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant={"secondary"}>
-          Add New Column
+          Add Column
           <Plus />
         </Button>
       </DialogTrigger>
@@ -38,8 +58,13 @@ export default function AddColumnDialog() {
           </DialogDescription>
         </DialogHeader>
         <div className="grid w-full items-center gap-4 py-4">
-          <Input id="title" placeholder="Column name" />
-          <Select>
+          <Input
+            id="title"
+            placeholder="Column name"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <Select value={color} onValueChange={setColor}>
             <SelectTrigger>
               <SelectValue placeholder="Select a color" />
             </SelectTrigger>
@@ -59,7 +84,7 @@ export default function AddColumnDialog() {
           <DialogClose asChild>
             <Button variant={"outline"}>Cancel</Button>
           </DialogClose>
-          <Button>Add Column</Button>
+          <Button onClick={handleCreate}>Add Column</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
