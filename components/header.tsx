@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <div className="flex justify-between border-b px-10 py-5">
+    <div className="flex justify-between border-b px-10 py-5 dark:bg-neutral-900">
       <Link href={"/"}>
         <div className="flex items-center justify-center gap-2 text-xl font-semibold">
           <Button size={"icon"}>

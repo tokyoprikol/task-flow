@@ -133,13 +133,13 @@ function DraggableTask({
     <div
       ref={ref}
       data-dragging={isDragging}
-      className="group flex cursor-pointer items-center justify-between rounded-lg border bg-white p-4 transition hover:shadow-md data-[dragging=true]:scale-[1.02] data-[dragging=true]:cursor-grabbing data-[dragging=true]:border-blue-400 data-[dragging=true]:bg-blue-50/70 data-[dragging=true]:opacity-70 data-[dragging=true]:shadow-2xl dark:bg-neutral-950"
+      className="group flex cursor-pointer items-start justify-between rounded-lg border bg-white p-4 transition hover:shadow-md data-[dragging=true]:scale-[1.02] data-[dragging=true]:cursor-grabbing data-[dragging=true]:border-blue-400 data-[dragging=true]:bg-blue-50/70 data-[dragging=true]:opacity-70 data-[dragging=true]:shadow-2xl dark:bg-neutral-950"
     >
       <div className="flex flex-col items-start gap-3">
         <h1 className="text-md font-semibold">{task?.title}</h1>
         <span className="text-sm text-neutral-600">{task?.description}</span>
         <div
-          className={`flex items-center rounded-sm p-1 text-sm ${
+          className={`flex items-center gap-1 rounded-sm p-1 text-sm ${
             task?.priority === "high"
               ? "bg-red-100 text-red-500"
               : task?.priority === "medium"
@@ -151,7 +151,7 @@ function DraggableTask({
           {task?.priority}
         </div>
       </div>
-      <div className="flex items-center border-l">
+      <div className="flex items-center">
         <TaskMenu taskId={task?.id} boardId={boardId} />
         <Button size={"icon-sm"} variant={"ghost"} ref={handleRef}>
           <GripVertical />

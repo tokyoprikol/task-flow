@@ -13,8 +13,9 @@ export default function deleteBoardMenu({ id }: { id: string }) {
   };
 
   return (
-    <Button size={"icon"} variant={"ghost"} onClick={handleDelete}>
+    <Button variant={"secondary"} onClick={handleDelete} className="w-full">
       <Trash2 className="size-5" />
+      Delete Board
     </Button>
   );
 }
