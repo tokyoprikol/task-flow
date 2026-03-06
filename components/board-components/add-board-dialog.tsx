@@ -55,7 +55,6 @@ export default function AddBoardDialog() {
         <DialogHeader>
           <DialogTitle className="text-2xl">New Board</DialogTitle>
           <DialogDescription>Give this board a name</DialogDescription>
-          {error && <span className="text-red-500">{error}</span>}
         </DialogHeader>
         <div className="flex items-center gap-2">
           <Input

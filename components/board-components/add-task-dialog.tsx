@@ -1,6 +1,7 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { useState } from "react";
+import { createTask } from "@/lib/actions/task-actions";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -13,9 +14,23 @@ import {
   DialogClose,
 } from "../ui/dialog";
 import { Input } from "../ui/input";
-import { useState } from "react";
-import { createTask } from "@/lib/actions/task-actions";
-import { useRouter } from "next/navigation";
+import { Textarea } from "../ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+
+import { Plus, ChevronUp, ChevronDown, Minus } from "lucide-react";
+
+const PRIORITIES_MAP = [
+  { value: "high", icon: <ChevronUp />, color: "bg-red-500" },
+  { value: "medium", icon: <Minus />, color: "bg-yellow-500" },
+  { value: "low", icon: <ChevronDown />, color: "bg-blue-500" },
+];
 
 export default function AddTaskDialog({
   columnId,
@@ -25,15 +40,20 @@ export default function AddTaskDialog({
   boardId: string;
 }) {
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("");
+
   const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState("");
 
   const handleCreate = async () => {
-    if (title) {
-      await createTask(columnId, title, boardId);
+    if (title && description && priority) {
+      setError("");
+      await createTask(title, description, priority, columnId, boardId);
       setIsOpen(false);
       setTitle("");
     } else {
-      alert("Please enter task name");
+      setError("You must give this task some name and description.");
     }
   };
 
@@ -50,19 +70,36 @@ export default function AddTaskDialog({
           <DialogDescription>
             Enter the details for the new task.
           </DialogDescription>
+          {error && <span className="text-red-500">{error}</span>}
         </DialogHeader>
-        <div className="grid w-full items-center gap-4 py-4">
-          <div className="flex flex-col items-start gap-2">
-            <label htmlFor="title" className="text-sm font-medium">
-              Name
-            </label>
-            <Input
-              id="title"
-              placeholder="Task name"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
+        <div className="w-full space-y-2 py-4">
+          <Input
+            id="title"
+            placeholder="Name..."
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <Textarea
+            id="title"
+            placeholder="Description..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <Select value={priority} onValueChange={setPriority}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select a priority" />
+            </SelectTrigger>
+            <SelectContent position={"popper"}>
+              <SelectGroup>
+                {PRIORITIES_MAP.map((item) => (
+                  <SelectItem value={item.value} key={item.value}>
+                    {item.icon}
+                    {item.value}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
         <DialogFooter>
           <DialogClose asChild>

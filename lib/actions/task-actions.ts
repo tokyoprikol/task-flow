@@ -5,8 +5,10 @@ import { generateKeyBetween } from "fractional-indexing";
 import prisma from "../prisma";
 
 export const createTask = async (
-  columnId: string,
   title: string,
+  description: string,
+  priority: string,
+  columnId: string,
   boardId: string,
 ) => {
   const lastTask = await prisma.task.findFirst({
@@ -22,6 +24,8 @@ export const createTask = async (
   await prisma.task.create({
     data: {
       title,
+      description,
+      priority,
       position: newPosition,
       columnId,
     },

@@ -8,7 +8,7 @@ import { move } from "@dnd-kit/helpers";
 import TaskMenu from "./board-components/task-menu";
 import AddTaskDialog from "./board-components/add-task-dialog";
 import { COLUMN_COLORS_MAP } from "@/lib/configs/map-configs";
-import { GripVertical } from "lucide-react";
+import { ChevronDown, ChevronUp, GripVertical, Minus } from "lucide-react";
 import { Button } from "./ui/button";
 
 interface Board {
@@ -29,12 +29,20 @@ interface Task {
   id: string;
   columnId: string;
   title: string;
+  description: string;
+  priority: string;
   position: string;
 }
 
 interface KanbanBoardProps {
   initialBoard: Board;
 }
+
+const PRIORITIES = {
+  low: <ChevronDown className="size-4" />,
+  medium: <Minus className="size-4" />,
+  high: <ChevronUp className="size-4" />,
+};
 
 export default function KanbanBoard({ initialBoard }: KanbanBoardProps) {
   const initialItems = initialBoard.columns.reduce(
@@ -73,7 +81,7 @@ export default function KanbanBoard({ initialBoard }: KanbanBoardProps) {
     >
       <div className="flex justify-center gap-10">
         {columns.map((col) => (
-          <div key={col.id} className="w-full space-y-3">
+          <div key={col.id} className="w-full max-w-md space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <h1 className="text-2xl font-bold">{col.title} </h1>
@@ -127,8 +135,23 @@ function DraggableTask({
       data-dragging={isDragging}
       className="group flex cursor-pointer items-center justify-between rounded-lg border bg-white p-4 transition hover:shadow-md data-[dragging=true]:scale-[1.02] data-[dragging=true]:cursor-grabbing data-[dragging=true]:border-blue-400 data-[dragging=true]:bg-blue-50/70 data-[dragging=true]:opacity-70 data-[dragging=true]:shadow-2xl dark:bg-neutral-950"
     >
-      {task ? task.title : "Untitled Task"}
-      <div className="flex items-center">
+      <div className="flex flex-col items-start gap-3">
+        <h1 className="text-md font-semibold">{task?.title}</h1>
+        <span className="text-sm text-neutral-600">{task?.description}</span>
+        <div
+          className={`flex items-center rounded-sm p-1 text-sm ${
+            task?.priority === "high"
+              ? "bg-red-100 text-red-500"
+              : task?.priority === "medium"
+                ? "bg-yellow-100 text-yellow-500"
+                : "bg-blue-100 text-blue-500"
+          }`}
+        >
+          {PRIORITIES[task?.priority]}
+          {task?.priority}
+        </div>
+      </div>
+      <div className="flex items-center border-l">
         <TaskMenu taskId={task?.id} boardId={boardId} />
         <Button size={"icon-sm"} variant={"ghost"} ref={handleRef}>
           <GripVertical />

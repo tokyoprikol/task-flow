@@ -111,6 +111,7 @@ model Column {
 model Task {
   id String @id @default(cuid())
   title String
+  description String
   position String @default("a0")
   priority String @default("low")
 
