@@ -30,9 +30,14 @@ export const createTask = async (
   revalidatePath(`/dashboard/${boardId}`);
 };
 
-export const deleteTask = async (id: string, boardId: string) => {
-  await prisma.task.delete({
-    where: { id },
-  });
+export const deleteTask = async (id: string | undefined, boardId: string) => {
+  if (id) {
+    await prisma.task.delete({
+      where: { id },
+    });
+  } else {
+    console.error("No task id!");
+  }
+
   revalidatePath(`/dashboard/${boardId}`);
 };

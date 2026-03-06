@@ -30,12 +30,18 @@ export default function AddBoardDialog() {
   const [title, setTitle] = useState("");
   const [color, setColor] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState("");
 
   const handleCreate = async () => {
-    await addNewBoard(title, color);
-    setIsOpen(false);
-    setTitle("");
-    setColor("");
+    if (title) {
+      setError("");
+      await addNewBoard(title, color);
+      setIsOpen(false);
+      setTitle("");
+      setColor("");
+    } else {
+      setError("You must give this board some name.");
+    }
   };
 
   return (
@@ -49,6 +55,7 @@ export default function AddBoardDialog() {
         <DialogHeader>
           <DialogTitle className="text-2xl">New Board</DialogTitle>
           <DialogDescription>Give this board a name</DialogDescription>
+          {error && <span className="text-red-500">{error}</span>}
         </DialogHeader>
         <div className="flex items-center gap-2">
           <Input

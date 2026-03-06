@@ -1,21 +1,21 @@
 export const COLORS_MAP = [
   { name: "Red", color: `bg-red-500` },
-  { name: "Orange", color: `bg-orange-500` },
-  { name: "Yellow", color: `bg-yellow-500` },
-  { name: "Green", color: `bg-green-500` },
-  { name: "Sky", color: `bg-blue-300` },
-  { name: "Blue", color: `bg-blue-500` },
-  { name: "Purple", color: `bg-purple-500` },
+  { name: "Orange", color: `bg-orange-400` },
+  { name: "Yellow", color: `bg-yellow-400` },
+  { name: "Green", color: `bg-green-400` },
+  { name: "Sky", color: `bg-sky-400` },
+  { name: "Blue", color: `bg-blue-400` },
+  { name: "Purple", color: `bg-purple-400` },
 ];
 
 export const COLUMN_COLORS_MAP: Record<string, string> = {
-  red: `border-t-red-500`,
-  orange: `border-t-orange-500`,
-  yellow: `border-t-yellow-500`,
-  green: `border-t-green-500`,
-  sky: `border-t-blue-300`,
-  blue: `border-t-blue-500`,
-  purple: `border-t-purple-500`,
+  red: `border-l-red-400`,
+  orange: `border-l-orange-400`,
+  yellow: `border-l-yellow-400`,
+  green: `border-l-green-400`,
+  sky: `border-l-sky-400`,
+  blue: `border-l-blue-400`,
+  purple: `border-l-purple-400`,
 };
 
 export const BOARD_COLORS_MAP: Record<string, string> = {
@@ -26,4 +26,14 @@ export const BOARD_COLORS_MAP: Record<string, string> = {
   sky: `border-blue-300`,
   blue: `border-blue-500`,
   purple: `border-purple-500`,
+};
+
+export const COLORS: Record<string, string> = {
+  red: `bg-red-400`,
+  orange: `bg-orange-400`,
+  yellow: `bg-yellow-400`,
+  green: `bg-green-400`,
+  sky: `bg-sky-400`,
+  blue: `bg-blue-400`,
+  purple: `bg-purple-400`,
 };

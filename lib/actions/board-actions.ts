@@ -10,7 +10,6 @@ export async function addNewBoard(title: string, color: string) {
       color,
     },
   });
-
   revalidatePath("/dashboard");
 }
 

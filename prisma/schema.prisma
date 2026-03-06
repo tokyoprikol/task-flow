@@ -112,6 +112,7 @@ model Task {
   id String @id @default(cuid())
   title String
   position String @default("a0")
+  priority String @default("low")
 
   columnId String
   column Column @relation(fields: [columnId], references: [id], onDelete: Cascade)

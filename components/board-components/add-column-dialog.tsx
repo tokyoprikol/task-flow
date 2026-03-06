@@ -33,13 +33,19 @@ export default function AddColumnDialog({
   const [title, setTitle] = useState("");
   const [color, setColor] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState("");
 
   const handleCreate = async () => {
-    if (boardId) await addColumn(title, color, boardId);
-
-    setIsOpen(false);
-    setTitle("");
-    setColor("");
+    if (title && boardId) {
+      setError("");
+      await addColumn(title, color, boardId);
+      setIsOpen(false);
+      setTitle("");
+      setColor("");
+    } else {
+      if (!title) setError("You must give this column some name.");
+      if (!boardId) console.error("No boardId given to function");
+    }
   };
 
   return (
@@ -56,6 +62,7 @@ export default function AddColumnDialog({
           <DialogDescription>
             Enter the details for the new column.
           </DialogDescription>
+          {error && <span className="text-red-500">{error}</span>}
         </DialogHeader>
         <div className="grid w-full items-center gap-4 py-4">
           <Input

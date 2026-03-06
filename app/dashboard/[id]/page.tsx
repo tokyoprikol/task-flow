@@ -1,7 +1,5 @@
 import AddColumnDialog from "@/components/board-components/add-column-dialog";
-import AddTaskDialog from "@/components/board-components/add-task-dialog";
-import TaskMenu from "@/components/board-components/task-menu";
-import { COLUMN_COLORS_MAP } from "@/lib/configs/map-configs";
+import KanbanBoard from "@/components/kanban-board";
 import prisma from "@/lib/prisma";
 
 export default async function BoardPage({
@@ -15,9 +13,7 @@ export default async function BoardPage({
     include: {
       columns: {
         orderBy: { order: "asc" },
-        include: {
-          tasks: true,
-        },
+        include: { tasks: true },
       },
     },
   });
@@ -32,7 +28,9 @@ export default async function BoardPage({
       )}
       <AddColumnDialog boardId={board?.id} />
 
-      <div className="flex justify-center gap-10">
+      <KanbanBoard initialBoard={board} />
+
+      {/* <div className="flex justify-center gap-10">
         {board?.columns.map((col) => (
           <div key={col.id} className="w-full space-y-3">
             <div className="flex items-center justify-between">
@@ -61,7 +59,7 @@ export default async function BoardPage({
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

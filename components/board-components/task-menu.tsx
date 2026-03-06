@@ -1,6 +1,13 @@
 "use client";
 
-import { MoreVertical, Edit, ArrowUp, ArrowDown, Trash2 } from "lucide-react";
+import {
+  MoreVertical,
+  Edit,
+  ArrowUp,
+  ArrowDown,
+  Trash2,
+  GripVertical,
+} from "lucide-react";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -14,7 +21,7 @@ export default function TaskMenu({
   taskId,
   boardId,
 }: {
-  taskId: string;
+  taskId: string | undefined;
   boardId: string;
 }) {
   const handleDelete = async (e: React.MouseEvent) => {
@@ -25,9 +32,12 @@ export default function TaskMenu({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant={"ghost"} size={"icon-xs"}>
-          <MoreVertical className="size-5" />
+      <DropdownMenuTrigger
+        asChild
+        className="opacity-0 group-hover:opacity-100"
+      >
+        <Button variant={"ghost"} size={"icon-sm"}>
+          <MoreVertical className="size-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

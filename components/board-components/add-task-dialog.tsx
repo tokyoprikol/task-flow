@@ -15,6 +15,7 @@ import {
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { createTask } from "@/lib/actions/task-actions";
+import { useRouter } from "next/navigation";
 
 export default function AddTaskDialog({
   columnId,
