@@ -1,3 +1,5 @@
+import { ChevronDown, ChevronUp, Minus } from "lucide-react";
+
 export const COLORS_MAP = [
   { name: "Red", color: `bg-red-500` },
   { name: "Orange", color: `bg-orange-400` },
@@ -36,4 +38,10 @@ export const COLORS: Record<string, string> = {
   sky: `bg-sky-400`,
   blue: `bg-blue-400`,
   purple: `bg-purple-400`,
+};
+
+export const PRIORITIES = {
+  low: <ChevronDown className="size-4" />,
+  medium: <Minus className="size-4" />,
+  high: <ChevronUp className="size-4" />,
 };

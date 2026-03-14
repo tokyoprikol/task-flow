@@ -5,46 +5,23 @@ import { useSortable } from "@dnd-kit/react/sortable";
 import { CollisionPriority } from "@dnd-kit/abstract";
 import { move } from "@dnd-kit/helpers";
 
+import { useTransition } from "react";
+
 import TaskMenu from "./board-components/task-menu";
 import AddTaskDialog from "./board-components/add-task-dialog";
-import { COLUMN_COLORS_MAP } from "@/lib/configs/map-configs";
-import { ChevronDown, ChevronUp, GripVertical, Minus } from "lucide-react";
+import { COLUMN_COLORS_MAP, PRIORITIES } from "@/lib/configs/map-configs";
+import { GripVertical } from "lucide-react";
 import { Button } from "./ui/button";
-
-interface Board {
-  id: string;
-  title: string;
-  columns: Column[];
-}
-interface Column {
-  id: string;
-  title: string;
-  order: number;
-  boardId: string;
-  color: string;
-  tasks: Task[];
-}
-
-interface Task {
-  id: string;
-  columnId: string;
-  title: string;
-  description: string;
-  priority: string;
-  position: string;
-}
+import { Board, Column, Task } from "@/lib/types";
+import { updateColumns } from "@/lib/actions/column-actions";
 
 interface KanbanBoardProps {
   initialBoard: Board;
 }
 
-const PRIORITIES = {
-  low: <ChevronDown className="size-4" />,
-  medium: <Minus className="size-4" />,
-  high: <ChevronUp className="size-4" />,
-};
-
 export default function KanbanBoard({ initialBoard }: KanbanBoardProps) {
+  const [isPending, startTransition] = useTransition();
+
   const initialItems = initialBoard.columns.reduce(
     (acc: Record<string, string[]>, col) => {
       acc[col.id] = col.tasks.map((task) => task.id);
@@ -78,6 +55,13 @@ export default function KanbanBoard({ initialBoard }: KanbanBoardProps) {
       onDragOver={(event) => {
         setItems((items) => move(items, event));
       }}
+      onDragEnd={(event) => {
+        if (event.canceled) return;
+
+        startTransition(async () => {
+          await updateColumns(items, initialBoard.id);
+        });
+      }}
     >
       <div className="flex justify-center gap-10">
         {columns.map((col) => (
@@ -100,6 +84,7 @@ export default function KanbanBoard({ initialBoard }: KanbanBoardProps) {
                     key={taskId}
                     id={taskId}
                     index={index}
+                    columnId={col.id}
                     task={task}
                     boardId={initialBoard.id}
                   />
@@ -116,24 +101,29 @@ export default function KanbanBoard({ initialBoard }: KanbanBoardProps) {
 function DraggableTask({
   id,
   index,
+  columnId,
   task,
   boardId,
 }: {
   id: string;
   index: number;
+  columnId: string;
   task: Task | undefined;
   boardId: string;
 }) {
   const { ref, handleRef, isDragging } = useSortable({
     id,
     index,
+    type: "item",
+    accept: "item",
+    group: columnId,
   });
 
   return (
     <div
       ref={ref}
       data-dragging={isDragging}
-      className="group flex cursor-pointer items-start justify-between rounded-lg border bg-white p-4 transition hover:shadow-md data-[dragging=true]:scale-[1.02] data-[dragging=true]:cursor-grabbing data-[dragging=true]:border-blue-400 data-[dragging=true]:bg-blue-50/70 data-[dragging=true]:opacity-70 data-[dragging=true]:shadow-2xl dark:bg-neutral-950"
+      className="group flex items-start justify-between rounded-lg border bg-white p-4 transition hover:shadow-md data-[dragging=true]:scale-[1.02] data-[dragging=true]:cursor-grabbing data-[dragging=true]:border-blue-400 data-[dragging=true]:bg-blue-50/70 data-[dragging=true]:opacity-70 data-[dragging=true]:shadow-2xl dark:bg-neutral-950"
     >
       <div className="flex flex-col items-start gap-3">
         <h1 className="text-md font-semibold">{task?.title}</h1>
@@ -172,6 +162,8 @@ function DroppableColumn({
 }) {
   const { ref } = useDroppable({
     id,
+    type: "column",
+    accept: "item",
     collisionPriority: CollisionPriority.Low,
   });
 

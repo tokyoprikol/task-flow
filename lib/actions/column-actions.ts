@@ -22,3 +22,21 @@ export async function addColumn(title: string, color: string, boardId: string) {
 
   revalidatePath(`/dashboard/${boardId}`);
 }
+
+export async function updateColumns(
+  items: Record<string, string[]>,
+  boardId: string,
+) {
+  await prisma.$transaction(
+    Object.entries(items).flatMap(([columnId, taskIds]) =>
+      taskIds.map((taskId) =>
+        prisma.task.update({
+          where: { id: taskId },
+          data: { columnId },
+        }),
+      ),
+    ),
+  );
+
+  revalidatePath(`/dashboard/${boardId}`);
+}
