@@ -34,7 +34,6 @@ export default function KanbanBoard({ initialBoard }: KanbanBoardProps) {
   );
 
   const [items, setItems] = useState(initialItems);
-
   const [columns, setColumns] = useState(initialBoard.columns);
 
   const getTask = (taskId: string) => {

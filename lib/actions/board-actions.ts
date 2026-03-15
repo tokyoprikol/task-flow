@@ -3,6 +3,14 @@
 import { revalidatePath } from "next/cache";
 import prisma from "../prisma";
 
+export async function getAllBoards() {
+  return await prisma.board.findMany({
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
+}
+
 export async function getBoardById(id: string) {
   return await prisma.board.findUnique({
     where: { id },
