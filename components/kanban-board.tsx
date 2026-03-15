@@ -10,22 +10,25 @@ import { useTransition } from "react";
 import TaskMenu from "./board-components/task-menu";
 import AddTaskDialog from "./board-components/add-task-dialog";
 import { COLUMN_COLORS_MAP, PRIORITIES } from "@/lib/configs/map-configs";
-import { GripVertical } from "lucide-react";
+import { GripVertical, Trash2 } from "lucide-react";
 import { Button } from "./ui/button";
 
-import { FullBoard } from "@/lib/types";
+import { ColumnWithTasks } from "@/lib/types";
 import { Task, Column } from "@/app/generated/prisma/client";
 
 import { updateColumns } from "@/lib/actions/column-actions";
+import DeleteColumnDialog from "./board-components/delete-column-dialog";
 
-interface KanbanBoardProps {
-  initialBoard: FullBoard;
-}
-
-export default function KanbanBoard({ initialBoard }: KanbanBoardProps) {
+export default function KanbanBoard({
+  initialColumns,
+  boardId,
+}: {
+  initialColumns: ColumnWithTasks[];
+  boardId: string;
+}) {
   const [isPending, startTransition] = useTransition();
 
-  const initialItems = initialBoard.columns.reduce(
+  const initialItems = initialColumns.reduce(
     (acc: Record<string, string[]>, col) => {
       acc[col.id] = col.tasks.map((task) => task.id);
       return acc;
@@ -34,23 +37,21 @@ export default function KanbanBoard({ initialBoard }: KanbanBoardProps) {
   );
 
   const [items, setItems] = useState(initialItems);
-  const [columns, setColumns] = useState(initialBoard.columns);
+  const [columns, setColumns] = useState(initialColumns);
 
   const getTask = (taskId: string) => {
-    return initialBoard.columns
-      .flatMap((c) => c.tasks)
-      .find((t) => t.id === taskId);
+    return initialColumns.flatMap((c) => c.tasks).find((t) => t.id === taskId);
   };
 
   useEffect(() => {
-    setColumns(initialBoard.columns);
+    setColumns(initialColumns);
     setItems(
-      initialBoard.columns.reduce((acc: Record<string, string[]>, col) => {
+      initialColumns.reduce((acc: Record<string, string[]>, col) => {
         acc[col.id] = col.tasks.map((task) => task.id);
         return acc;
       }, {}),
     );
-  }, [initialBoard]);
+  }, [initialColumns]);
 
   return (
     <DragDropProvider
@@ -61,11 +62,11 @@ export default function KanbanBoard({ initialBoard }: KanbanBoardProps) {
         if (event.canceled) return;
 
         startTransition(async () => {
-          await updateColumns(items, initialBoard.id);
+          await updateColumns(items, boardId);
         });
       }}
     >
-      <div className="flex justify-center gap-10">
+      <div className="flex justify-start gap-10">
         {columns.map((col) => (
           <div key={col.id} className="w-full max-w-md space-y-3">
             <div className="flex items-center justify-between">
@@ -76,7 +77,10 @@ export default function KanbanBoard({ initialBoard }: KanbanBoardProps) {
                 </span>
               </div>
 
-              <AddTaskDialog columnId={col.id} boardId={initialBoard.id} />
+              <div className="flex items-center gap-2">
+                <DeleteColumnDialog columnId={col.id} boardId={boardId} />
+                <AddTaskDialog columnId={col.id} boardId={boardId} />
+              </div>
             </div>
             <DroppableColumn id={col.id} col={col}>
               {items[col.id]?.map((taskId, index) => {
@@ -88,7 +92,7 @@ export default function KanbanBoard({ initialBoard }: KanbanBoardProps) {
                     index={index}
                     columnId={col.id}
                     task={task}
-                    boardId={initialBoard.id}
+                    boardId={boardId}
                   />
                 );
               })}

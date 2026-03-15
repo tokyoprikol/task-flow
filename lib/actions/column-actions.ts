@@ -40,3 +40,11 @@ export async function updateColumns(
 
   revalidatePath(`/dashboard/${boardId}`);
 }
+
+export async function deleteColumn(columnId: string, boardId: string) {
+  await prisma.column.delete({
+    where: { id: columnId },
+  });
+
+  revalidatePath(`/dashboard/${boardId}`);
+}

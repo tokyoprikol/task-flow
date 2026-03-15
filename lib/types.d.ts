@@ -4,6 +4,10 @@ export type FullBoard = Prisma.BoardGetPayload<{
   include: { columns: { include: { tasks: true } } };
 }>;
 
+export type ColumnWithTasks = Prisma.ColumnGetPayload<{
+  include: { tasks: true };
+}>;
+
 export interface Board {
   id: string;
   title: string;

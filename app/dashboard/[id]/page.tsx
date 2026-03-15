@@ -22,7 +22,7 @@ export default async function BoardPage({
       )}
       <AddColumnDialog boardId={board.id} />
 
-      <KanbanBoard initialBoard={board} />
+      <KanbanBoard initialColumns={board.columns} boardId={board.id} />
     </div>
   );
 }
