@@ -1,4 +1,5 @@
 import { ChevronDown, ChevronUp, Minus } from "lucide-react";
+import { ReactNode } from "react";
 
 export const COLORS_MAP = [
   { name: "Red", color: `bg-red-500` },
@@ -40,7 +41,7 @@ export const COLORS: Record<string, string> = {
   purple: `bg-purple-400`,
 };
 
-export const PRIORITIES = {
+export const PRIORITIES: Record<string, ReactNode> = {
   low: <ChevronDown className="size-4" />,
   medium: <Minus className="size-4" />,
   high: <ChevronUp className="size-4" />,

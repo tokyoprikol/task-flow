@@ -1,3 +1,9 @@
+import { Prisma } from "@/app/generated/prisma/client";
+
+export type FullBoard = Prisma.BoardGetPayload<{
+  include: { columns: { include: { tasks: true } } };
+}>;
+
 export interface Board {
   id: string;
   title: string;

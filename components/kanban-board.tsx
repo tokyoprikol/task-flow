@@ -12,11 +12,14 @@ import AddTaskDialog from "./board-components/add-task-dialog";
 import { COLUMN_COLORS_MAP, PRIORITIES } from "@/lib/configs/map-configs";
 import { GripVertical } from "lucide-react";
 import { Button } from "./ui/button";
-import { Board, Column, Task } from "@/lib/types";
+
+import { FullBoard } from "@/lib/types";
+import { Task, Column } from "@/app/generated/prisma/client";
+
 import { updateColumns } from "@/lib/actions/column-actions";
 
 interface KanbanBoardProps {
-  initialBoard: Board;
+  initialBoard: FullBoard;
 }
 
 export default function KanbanBoard({ initialBoard }: KanbanBoardProps) {
@@ -137,7 +140,7 @@ function DraggableTask({
                 : "bg-blue-100 text-blue-500"
           }`}
         >
-          {PRIORITIES[task?.priority]}
+          {task?.priority && PRIORITIES[task.priority]}
           {task?.priority}
         </div>
       </div>

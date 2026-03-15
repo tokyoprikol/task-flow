@@ -3,6 +3,18 @@
 import { revalidatePath } from "next/cache";
 import prisma from "../prisma";
 
+export async function getBoardById(id: string) {
+  return await prisma.board.findUnique({
+    where: { id },
+    include: {
+      columns: {
+        orderBy: { order: "asc" },
+        include: { tasks: true },
+      },
+    },
+  });
+}
+
 export async function addNewBoard(title: string, color: string) {
   await prisma.board.create({
     data: {
