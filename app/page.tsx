@@ -37,7 +37,7 @@ export default function Home() {
         </div>
         <div>
           <Link href="/dashboard">
-            <Button>
+            <Button className="transition hover:shadow-xl">
               Get Started
               <ArrowRight />
             </Button>
@@ -48,7 +48,7 @@ export default function Home() {
         {CARDS_BENEFITS.map((card) => (
           <div
             key={card.title}
-            className="flex max-w-80 flex-col items-start gap-2 rounded-lg border p-5 transition hover:shadow-xl"
+            className="flex max-w-80 flex-col items-start gap-2 rounded-lg border p-5 transition hover:shadow-lg"
           >
             <div className="rounded-lg bg-neutral-200 p-2 dark:bg-neutral-800">
               {card.icon}

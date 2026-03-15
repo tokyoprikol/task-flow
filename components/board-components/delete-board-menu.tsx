@@ -1,21 +1,49 @@
 "use client";
 
-import React from "react";
 import { Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { deleteBoard } from "@/lib/actions/board-actions";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
 
 export default function deleteBoardMenu({ id }: { id: string }) {
-  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleDelete = async () => {
     await deleteBoard(id);
   };
 
   return (
-    <Button variant={"secondary"} onClick={handleDelete} className="w-full">
-      <Trash2 className="size-5" />
-      Delete Board
-    </Button>
+    <>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button className="w-full">
+            <Trash2 className="size-5" />
+            Delete Board
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent size="sm">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              You sure you want to delete this board?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
