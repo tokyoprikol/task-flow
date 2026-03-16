@@ -46,3 +46,12 @@ export async function deleteBoard(id: string) {
 
   revalidatePath("/dashboard");
 }
+
+export const editBoardName = async (boardId: string, title: string) => {
+  await prisma.board.update({
+    where: { id: boardId },
+    data: { title },
+  });
+
+  revalidatePath("/dashboard");
+};
