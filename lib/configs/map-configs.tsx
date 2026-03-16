@@ -12,13 +12,13 @@ export const COLORS_MAP = [
 ];
 
 export const COLUMN_COLORS_MAP: Record<string, string> = {
-  red: `border-l-red-400`,
-  orange: `border-l-orange-400`,
-  yellow: `border-l-yellow-400`,
-  green: `border-l-green-400`,
-  sky: `border-l-sky-400`,
-  blue: `border-l-blue-400`,
-  purple: `border-l-purple-400`,
+  red: `border-l-red-500`,
+  orange: `border-l-orange-500`,
+  yellow: `border-l-yellow-500`,
+  green: `border-l-green-500`,
+  sky: `border-l-sky-500`,
+  blue: `border-l-blue-500`,
+  purple: `border-l-purple-500`,
 };
 
 export const BOARD_COLORS_MAP: Record<string, string> = {

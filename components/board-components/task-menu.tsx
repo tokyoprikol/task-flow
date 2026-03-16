@@ -42,7 +42,7 @@ export default function TaskMenu({
   taskId,
   boardId,
 }: {
-  taskId: string;
+  taskId: string | undefined;
   boardId: string;
 }) {
   const [newName, setNewName] = useState("");
@@ -52,7 +52,7 @@ export default function TaskMenu({
 
   const handleEdit = async () => {
     try {
-      await editTaskName(taskId, newName, boardId);
+      if (taskId) await editTaskName(taskId, newName, boardId);
       setIsEditOpen(false);
     } catch (e) {
       console.error(e);
