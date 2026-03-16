@@ -13,32 +13,34 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { useState } from "react";
-import { editBoardName } from "@/lib/actions/board-actions";
+import { editColumnName } from "@/lib/actions/column-actions";
 
-export default function EditBoardDialog({ boardId }: { boardId: string }) {
+export default function EditColumnName({
+  columnId,
+  boardId,
+}: {
+  columnId: string;
+  boardId: string;
+}) {
   const [newName, setNewName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   const handleEdit = async () => {
-    try {
-      await editBoardName(boardId, newName);
-      setIsOpen(false);
-    } catch (e) {
-      console.log(e);
-    }
+    await editColumnName(columnId, newName, boardId);
+    setIsOpen(false);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button size={"sm"}>
+        <Button variant={"secondary"} size={"xs"}>
           <Edit />
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-center">
-            Want to edit your board name?
+            Want to edit your column name?
           </DialogTitle>
         </DialogHeader>
         <div>

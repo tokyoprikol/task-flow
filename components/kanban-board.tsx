@@ -18,6 +18,7 @@ import { Task, Column } from "@/app/generated/prisma/client";
 
 import { updateColumns } from "@/lib/actions/column-actions";
 import DeleteColumnDialog from "./board-components/delete-column-dialog";
+import EditColumnName from "./board-components/edit-column-dialog";
 
 export default function KanbanBoard({
   initialColumns,
@@ -71,8 +72,9 @@ export default function KanbanBoard({
           <div key={col.id} className="w-full max-w-md space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
+                <EditColumnName />
                 <h1 className="text-2xl font-bold">{col.title} </h1>
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-200 text-xs font-bold dark:bg-neutral-800">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 text-xs font-bold dark:bg-neutral-800">
                   {col.tasks.length}
                 </span>
               </div>

@@ -48,3 +48,16 @@ export async function deleteColumn(columnId: string, boardId: string) {
 
   revalidatePath(`/dashboard/${boardId}`);
 }
+
+export async function editColumnName(
+  columnId: string,
+  title: string,
+  boardId: string,
+) {
+  await prisma.column.update({
+    where: { id: columnId },
+    data: { title },
+  });
+
+  revalidatePath(`/dashboard/${boardId}`);
+}
