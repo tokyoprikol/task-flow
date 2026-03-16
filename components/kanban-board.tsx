@@ -72,7 +72,7 @@ export default function KanbanBoard({
           <div key={col.id} className="w-full max-w-md space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <EditColumnName />
+                <EditColumnName columnId={col.id} boardId={boardId} />
                 <h1 className="text-2xl font-bold">{col.title} </h1>
                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 text-xs font-bold dark:bg-neutral-800">
                   {col.tasks.length}

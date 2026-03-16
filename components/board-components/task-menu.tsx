@@ -15,7 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { deleteTask } from "@/lib/actions/task-actions";
+import { deleteTask, editTaskName } from "@/lib/actions/task-actions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,15 +28,36 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { useState } from "react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
+import { Input } from "../ui/input";
 
 export default function TaskMenu({
   taskId,
   boardId,
 }: {
-  taskId: string | undefined;
+  taskId: string;
   boardId: string;
 }) {
+  const [newName, setNewName] = useState("");
+
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
+  const handleEdit = async () => {
+    try {
+      await editTaskName(taskId, newName, boardId);
+      setIsEditOpen(false);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -56,7 +77,7 @@ export default function TaskMenu({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setIsEditOpen(true)}>
             <Edit />
             Edit
           </DropdownMenuItem>
@@ -67,8 +88,30 @@ export default function TaskMenu({
         </DropdownMenuContent>
       </DropdownMenu>
 
+      <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="text-center">
+              Want to edit your task name?
+            </DialogTitle>
+          </DialogHeader>
+          <div>
+            <Input
+              placeholder="New name..."
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+            />
+          </div>
+          <DialogFooter className="flex justify-center!">
+            <DialogClose asChild>
+              <Button variant={"outline"}>Close</Button>
+            </DialogClose>
+            <Button onClick={handleEdit}>Update</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
-        <AlertDialogTrigger className="flex gap-2"></AlertDialogTrigger>
         <AlertDialogContent size="sm">
           <AlertDialogHeader>
             <AlertDialogTitle>

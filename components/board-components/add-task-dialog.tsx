@@ -60,8 +60,8 @@ export default function AddTaskDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button size={"icon"} variant={"secondary"}>
-          <Plus className="size-5" />
+        <Button size={"sm"} variant={"secondary"}>
+          <Plus />
         </Button>
       </DialogTrigger>
       <DialogContent>

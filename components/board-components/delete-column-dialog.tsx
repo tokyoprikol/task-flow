@@ -36,7 +36,7 @@ export default function DeleteColumnDialog({
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
-        <Button variant="secondary">
+        <Button variant="secondary" size={"sm"}>
           <Trash2 />
         </Button>
       </AlertDialogTrigger>
