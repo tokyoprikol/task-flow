@@ -12,7 +12,7 @@ export default async function Dashboard() {
 
   if (!session?.user) redirect("sign-in");
 
-  const boards = await getAllBoards();
+  const boards = await getAllBoards(session.user.id);
   console.log(boards);
 
   return (

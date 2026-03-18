@@ -3,10 +3,13 @@
 import { revalidatePath } from "next/cache";
 import prisma from "../prisma";
 
-export async function getAllBoards() {
+export async function getAllBoards(userId: string) {
   return await prisma.board.findMany({
     orderBy: {
       createdAt: "asc",
+    },
+    where: {
+      userId,
     },
   });
 }
