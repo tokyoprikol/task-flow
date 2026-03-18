@@ -6,8 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function getTask(taskId: string, initialColumns: ColumnWithTasks[]) {
-  return initialColumns
-    .flatMap((column) => column.tasks)
-    .find((task) => (task.id = taskId));
+export function convertError(errorMes: string) {
+  const idxOfBracket = errorMes.lastIndexOf("]");
+  return errorMes.slice(idxOfBracket + 1);
 }

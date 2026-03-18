@@ -2,6 +2,7 @@ import { Layers } from "lucide-react";
 import { Button } from "./ui/button";
 import ChangeTheme from "./change-theme";
 import Link from "next/link";
+import AuthButtons from "./auth-buttons";
 
 export default function Header() {
   return (
@@ -16,8 +17,7 @@ export default function Header() {
       </Link>
       <div className="flex items-center gap-3">
         <ChangeTheme />
-        <Button variant={"outline"}>Sign In</Button>
-        <Button>Start for free</Button>
+        <AuthButtons />
       </div>
     </div>
   );
