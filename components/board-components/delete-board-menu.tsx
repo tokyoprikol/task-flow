@@ -30,9 +30,9 @@ export default function deleteBoardMenu({
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button className="w-full">
-            <Trash2 className="size-5" />
-            Delete Board
+          <Button size={"sm"}>
+            <Trash2 />
+            Delete
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent size="sm">

@@ -19,12 +19,10 @@ export default function BoardCard({
       <div className="flex w-full items-center justify-between">
         <Link
           href={`dashboard/${board.id}`}
-          className="text-2xl font-bold transition hover:text-neutral-500"
+          className="text-xl font-bold transition hover:text-neutral-600"
         >
           {board.title}
         </Link>
-
-        <EditBoardDialog boardId={board.id} userId={userId} />
       </div>
 
       <div className="flex items-center gap-1 text-sm text-neutral-500">
@@ -34,7 +32,8 @@ export default function BoardCard({
           timeStyle: "short",
         })}
       </div>
-      <div className="w-full">
+      <div className="flex w-full justify-center gap-1">
+        <EditBoardDialog boardId={board.id} userId={userId} />
         <DeleteBoardMenu id={board.id} userId={userId} />
       </div>
     </div>

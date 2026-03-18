@@ -39,6 +39,7 @@ export default function EditBoardDialog({
       <DialogTrigger asChild>
         <Button size={"sm"}>
           <Edit />
+          Edit
         </Button>
       </DialogTrigger>
       <DialogContent>
