@@ -20,7 +20,7 @@ export default async function BoardPage({
   if (!session?.user) redirect("sign-in");
 
   const { id } = await params;
-  const board = await getBoardById(id);
+  const board = await getBoardById(id, session.user.id);
 
   console.log(board);
 

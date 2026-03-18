@@ -14,9 +14,9 @@ export async function getAllBoards(userId: string) {
   });
 }
 
-export async function getBoardById(id: string) {
+export async function getBoardById(id: string, userId: string) {
   return await prisma.board.findUnique({
-    where: { id },
+    where: { id, userId },
     include: {
       columns: {
         orderBy: { order: "asc" },
