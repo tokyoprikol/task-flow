@@ -85,6 +85,8 @@ model Board {
   title String @default("New Board")
   color String 
 
+  userId String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

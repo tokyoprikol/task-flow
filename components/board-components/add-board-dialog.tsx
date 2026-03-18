@@ -26,7 +26,7 @@ import { useState } from "react";
 import { addNewBoard } from "@/lib/actions/board-actions";
 import { Plus } from "lucide-react";
 
-export default function AddBoardDialog() {
+export default function AddBoardDialog({ userId }: { userId: string }) {
   const [title, setTitle] = useState("");
   const [color, setColor] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +35,7 @@ export default function AddBoardDialog() {
   const handleCreate = async () => {
     if (title) {
       setError("");
-      await addNewBoard(title, color);
+      await addNewBoard(title, color, userId);
       setIsOpen(false);
       setTitle("");
       setColor("");

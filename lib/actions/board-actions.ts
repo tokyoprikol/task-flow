@@ -23,11 +23,16 @@ export async function getBoardById(id: string) {
   });
 }
 
-export async function addNewBoard(title: string, color: string) {
+export async function addNewBoard(
+  title: string,
+  color: string,
+  userId: string,
+) {
   await prisma.board.create({
     data: {
       title,
       color,
+      userId,
     },
   });
   revalidatePath("/dashboard");

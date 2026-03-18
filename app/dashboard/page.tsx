@@ -1,8 +1,17 @@
 import BoardCard from "@/components/board-card";
 import AddBoardDialog from "@/components/board-components/add-board-dialog";
 import { getAllBoards } from "@/lib/actions/board-actions";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) redirect("sign-in");
+
   const boards = await getAllBoards();
   console.log(boards);
 
@@ -17,7 +26,7 @@ export default async function Dashboard() {
           {boards.map((board) => (
             <BoardCard key={board.id} board={board} />
           ))}
-          <AddBoardDialog />
+          <AddBoardDialog userId={session.user.id} />
         </div>
       </div>
     </div>

@@ -2,14 +2,23 @@ import AddColumnDialog from "@/components/board-components/add-column-dialog";
 import KanbanBoard from "@/components/kanban-board";
 import { Button } from "@/components/ui/button";
 import { getBoardById } from "@/lib/actions/board-actions";
+import { auth } from "@/lib/auth";
 import { ArrowLeft } from "lucide-react";
+import { headers } from "next/headers";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function BoardPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) redirect("sign-in");
+
   const { id } = await params;
   const board = await getBoardById(id);
 

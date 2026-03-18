@@ -1,16 +1,15 @@
+"use client";
+
 import Link from "next/link";
-import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
 import ChangeTheme from "./change-theme";
 import AuthButtons from "./auth-buttons";
 import { Button } from "./ui/button";
 import { Layers } from "lucide-react";
 import UserAvatar from "./user-avatar";
+import { useSession } from "@/lib/auth-client";
 
-export default async function Header() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+export default function Header() {
+  const { data: session } = useSession();
 
   return (
     <div className="flex justify-between border-b px-10 py-5 dark:bg-neutral-900">
