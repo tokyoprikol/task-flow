@@ -5,7 +5,13 @@ import { CalendarDays } from "lucide-react";
 import { COLUMN_COLORS_MAP } from "@/lib/configs/map-configs";
 import EditBoardDialog from "./board-components/edit-board-dialog";
 
-export default function BoardCard({ board }: { board: Board }) {
+export default function BoardCard({
+  board,
+  userId,
+}: {
+  board: Board;
+  userId: string;
+}) {
   return (
     <div
       className={`flex h-50 w-70 flex-col items-start justify-between gap-5 rounded-lg border border-l-7 px-4 py-6 transition hover:shadow-lg dark:bg-neutral-900 ${COLUMN_COLORS_MAP[board.color.toLowerCase()]}`}
@@ -29,7 +35,7 @@ export default function BoardCard({ board }: { board: Board }) {
         })}
       </div>
       <div className="w-full">
-        <DeleteBoardMenu id={board.id} />
+        <DeleteBoardMenu id={board.id} userId={userId} />
       </div>
     </div>
   );

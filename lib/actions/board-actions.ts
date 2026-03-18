@@ -41,11 +41,12 @@ export async function addNewBoard(
   revalidatePath("/dashboard");
 }
 
-export async function deleteBoard(id: string) {
+export async function deleteBoard(id: string, userId: string) {
   try {
     await prisma.board.delete({
       where: {
         id,
+        userId,
       },
     });
   } catch (e) {

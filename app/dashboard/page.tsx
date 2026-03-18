@@ -24,7 +24,7 @@ export default async function Dashboard() {
         )}
         <div className="grid grid-cols-5 gap-6">
           {boards.map((board) => (
-            <BoardCard key={board.id} board={board} />
+            <BoardCard key={board.id} board={board} userId={session.user.id} />
           ))}
           <AddBoardDialog userId={session.user.id} />
         </div>

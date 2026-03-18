@@ -15,9 +15,15 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 
-export default function deleteBoardMenu({ id }: { id: string }) {
+export default function deleteBoardMenu({
+  id,
+  userId,
+}: {
+  id: string;
+  userId: string;
+}) {
   const handleDelete = async () => {
-    await deleteBoard(id);
+    await deleteBoard(id, userId);
   };
 
   return (
