@@ -15,12 +15,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signIn } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { convertError } from "@/lib/utils";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircleIcon } from "lucide-react";
 
 export default function SignInPage() {
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -42,7 +44,7 @@ export default function SignInPage() {
         onSuccess: (ctx) => {
           setLoading(false);
           setError(null);
-          redirect("/dashboard");
+          router.push("/dashboard");
         },
         onError: (ctx) => {
           setLoading(false);
