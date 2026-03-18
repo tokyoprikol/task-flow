@@ -15,13 +15,19 @@ import { Input } from "../ui/input";
 import { useState } from "react";
 import { editBoardName } from "@/lib/actions/board-actions";
 
-export default function EditBoardDialog({ boardId }: { boardId: string }) {
+export default function EditBoardDialog({
+  boardId,
+  userId,
+}: {
+  boardId: string;
+  userId: string;
+}) {
   const [newName, setNewName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   const handleEdit = async () => {
     try {
-      await editBoardName(boardId, newName);
+      await editBoardName(boardId, newName, userId);
       setIsOpen(false);
     } catch (e) {
       console.log(e);

@@ -56,10 +56,14 @@ export async function deleteBoard(id: string, userId: string) {
   revalidatePath("/dashboard");
 }
 
-export const editBoardName = async (boardId: string, title: string) => {
+export const editBoardName = async (
+  boardId: string,
+  title: string,
+  userId: string,
+) => {
   await prisma.board.update({
     where: { id: boardId },
-    data: { title },
+    data: { title, userId },
   });
 
   revalidatePath("/dashboard");

@@ -24,7 +24,7 @@ export default function BoardCard({
           {board.title}
         </Link>
 
-        <EditBoardDialog boardId={board.id} />
+        <EditBoardDialog boardId={board.id} userId={userId} />
       </div>
 
       <div className="flex items-center gap-1 text-sm text-neutral-500">
