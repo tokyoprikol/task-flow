@@ -3,10 +3,10 @@
 import {
   MoreVertical,
   Edit,
-  ArrowUp,
-  ArrowDown,
   Trash2,
-  GripVertical,
+  ChevronUp,
+  ChevronDown,
+  Minus,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import {
@@ -25,7 +25,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { useState } from "react";
 import {
@@ -37,22 +36,53 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { Task } from "@/app/generated/prisma/client";
+
+const PRIORITIES_MAP = [
+  { value: "high", icon: <ChevronUp />, color: "bg-red-500" },
+  { value: "medium", icon: <Minus />, color: "bg-yellow-500" },
+  { value: "low", icon: <ChevronDown />, color: "bg-blue-500" },
+];
 
 export default function TaskMenu({
   taskId,
   boardId,
+  task,
 }: {
   taskId: string | undefined;
   boardId: string;
+  task: Task | undefined;
 }) {
   const [newName, setNewName] = useState("");
+  const [newDesc, setNewDesc] = useState("");
+  const [newPriority, setNewPriority] = useState("");
 
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
+  const onOpenEdit = () => {
+    if (!task) return;
+
+    setNewName(task.title ?? "");
+    setNewDesc(task.description ?? "");
+    setNewPriority(task.priority ?? "");
+
+    setIsEditOpen(true);
+  };
+
   const handleEdit = async () => {
     try {
-      if (taskId) await editTaskName(taskId, newName, boardId);
+      if (taskId)
+        await editTaskName(taskId, newName, newDesc, newPriority, boardId);
       setIsEditOpen(false);
     } catch (e) {
       console.error(e);
@@ -77,7 +107,7 @@ export default function TaskMenu({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => setIsEditOpen(true)}>
+          <DropdownMenuItem onClick={onOpenEdit}>
             <Edit />
             Edit
           </DropdownMenuItem>
@@ -92,15 +122,38 @@ export default function TaskMenu({
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="text-center">
-              Want to edit your task name?
+              Want to edit your task ?
             </DialogTitle>
           </DialogHeader>
-          <div>
+
+          <div className="w-full space-y-2 py-4">
             <Input
+              id="title"
               placeholder="New name..."
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
             />
+            <Textarea
+              id="title"
+              placeholder="New description..."
+              value={newDesc}
+              onChange={(e) => setNewDesc(e.target.value)}
+            />
+            <Select value={newPriority} onValueChange={setNewPriority}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a priority" />
+              </SelectTrigger>
+              <SelectContent position={"popper"}>
+                <SelectGroup>
+                  {PRIORITIES_MAP.map((item) => (
+                    <SelectItem value={item.value} key={item.value}>
+                      {item.icon}
+                      {item.value}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           <DialogFooter className="flex justify-center!">
             <DialogClose asChild>

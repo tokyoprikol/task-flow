@@ -49,11 +49,13 @@ export const deleteTask = async (id: string | undefined, boardId: string) => {
 export const editTaskName = async (
   taskId: string,
   title: string,
+  description: string,
+  priority: string,
   boardId: string,
 ) => {
   await prisma.task.update({
     where: { id: taskId },
-    data: { title },
+    data: { title, description, priority },
   });
 
   revalidatePath(`/dashboard/${boardId}`);

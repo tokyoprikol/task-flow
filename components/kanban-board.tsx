@@ -142,7 +142,7 @@ function DraggableTask({
           </span>
         </div>
         <div className="flex items-center">
-          <TaskMenu taskId={task?.id} boardId={boardId} />
+          <TaskMenu taskId={task?.id} boardId={boardId} task={task} />
           <Button size={"icon-sm"} variant={"ghost"} ref={handleRef}>
             <GripVertical />
           </Button>
