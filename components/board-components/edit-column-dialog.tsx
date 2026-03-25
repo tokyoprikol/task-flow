@@ -33,7 +33,7 @@ export default function EditColumnName({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant={"secondary"} size={"xs"}>
+        <Button variant={"secondary"} size={"sm"}>
           <Edit />
         </Button>
       </DialogTrigger>

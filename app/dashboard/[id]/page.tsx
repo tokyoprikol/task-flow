@@ -1,12 +1,12 @@
+import Link from "next/link";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import AddColumnDialog from "@/components/board-components/add-column-dialog";
 import KanbanBoard from "@/components/kanban-board";
-import { Button } from "@/components/ui/button";
 import { getBoardById } from "@/lib/actions/board-actions";
-import { auth } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { headers } from "next/headers";
-import Link from "next/link";
-import { redirect } from "next/navigation";
 
 export default async function BoardPage({
   params,
@@ -29,9 +29,9 @@ export default async function BoardPage({
   return (
     <div className="flex-1 space-y-7 px-10 py-5">
       <div className="flex flex-col items-start space-y-5">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1">
           <Link href={"/dashboard"}>
-            <Button size={"sm"}>
+            <Button size={"sm"} variant={"ghost"}>
               <ArrowLeft />
             </Button>
           </Link>

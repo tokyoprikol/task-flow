@@ -51,7 +51,7 @@ export default function AddColumnDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant={"secondary"}>
+        <Button variant={"secondary"} size={"sm"}>
           Add Column
           <Plus />
         </Button>

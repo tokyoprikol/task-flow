@@ -9,8 +9,8 @@ import { useTransition } from "react";
 
 import TaskMenu from "./board-components/task-menu";
 import AddTaskDialog from "./board-components/add-task-dialog";
-import { COLUMN_COLORS_MAP, PRIORITIES } from "@/lib/configs/map-configs";
-import { GripVertical, Trash2 } from "lucide-react";
+import { COLUMN_COLORS_MAP } from "@/lib/configs/map-configs";
+import { GripVertical } from "lucide-react";
 import { Button } from "./ui/button";
 
 import { ColumnWithTasks } from "@/lib/types";
@@ -19,6 +19,7 @@ import { Task, Column } from "@/app/generated/prisma/client";
 import { updateColumns } from "@/lib/actions/column-actions";
 import DeleteColumnDialog from "./board-components/delete-column-dialog";
 import EditColumnName from "./board-components/edit-column-dialog";
+import TaskPriority from "./task-priority";
 
 export default function KanbanBoard({
   initialColumns,
@@ -72,7 +73,6 @@ export default function KanbanBoard({
           <div key={col.id} className="w-full max-w-md space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <EditColumnName columnId={col.id} boardId={boardId} />
                 <h1 className="text-2xl font-bold">{col.title} </h1>
                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 text-xs font-bold dark:bg-neutral-800">
                   {col.tasks.length}
@@ -80,6 +80,7 @@ export default function KanbanBoard({
               </div>
 
               <div className="flex items-center gap-2">
+                <EditColumnName columnId={col.id} boardId={boardId} />
                 <DeleteColumnDialog columnId={col.id} boardId={boardId} />
                 <AddTaskDialog columnId={col.id} boardId={boardId} />
               </div>
@@ -131,29 +132,31 @@ function DraggableTask({
     <div
       ref={ref}
       data-dragging={isDragging}
-      className="group flex items-start justify-between rounded-lg border bg-white p-4 transition hover:shadow-md data-[dragging=true]:scale-[1.02] data-[dragging=true]:cursor-grabbing data-[dragging=true]:border-blue-400 data-[dragging=true]:bg-blue-50/70 data-[dragging=true]:opacity-70 data-[dragging=true]:shadow-2xl dark:bg-neutral-800/60"
+      className="group space-y-4 rounded-lg border bg-white p-4 transition hover:shadow-md data-[dragging=true]:scale-[1.02] data-[dragging=true]:cursor-grabbing data-[dragging=true]:border-blue-400 data-[dragging=true]:bg-blue-50/70 data-[dragging=true]:opacity-70 data-[dragging=true]:shadow-2xl dark:bg-neutral-800/50"
     >
-      <div className="flex flex-col items-start gap-3">
-        <h1 className="text-md font-semibold">{task?.title}</h1>
-        <span className="text-sm text-neutral-600">{task?.description}</span>
-        <div
-          className={`flex items-center gap-1 rounded-sm p-1 text-sm ${
-            task?.priority === "high"
-              ? "bg-red-100 text-red-400 dark:bg-red-500 dark:text-red-950"
-              : task?.priority === "medium"
-                ? "bg-yellow-100 text-yellow-400 dark:bg-yellow-500 dark:text-yellow-950"
-                : "bg-blue-100 text-blue-400 dark:bg-blue-500 dark:text-blue-950"
-          }`}
-        >
-          {task?.priority && PRIORITIES[task.priority]}
-          {task?.priority}
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col items-start gap-3">
+          <h1 className="text-md font-semibold">{task?.title}</h1>
+          <span className="text-sm text-neutral-600 dark:text-neutral-400">
+            {task?.description}
+          </span>
+        </div>
+        <div className="flex items-center">
+          <TaskMenu taskId={task?.id} boardId={boardId} />
+          <Button size={"icon-sm"} variant={"ghost"} ref={handleRef}>
+            <GripVertical />
+          </Button>
         </div>
       </div>
-      <div className="flex items-center">
-        <TaskMenu taskId={task?.id} boardId={boardId} />
-        <Button size={"icon-sm"} variant={"ghost"} ref={handleRef}>
-          <GripVertical />
-        </Button>
+      <div className="flex items-center justify-between">
+        <div className="text-xs font-semibold">
+          Added on{" "}
+          {task?.createdAt.toLocaleString("en-US", {
+            dateStyle: "medium",
+            timeStyle: "short",
+          })}
+        </div>
+        <TaskPriority task={task} />
       </div>
     </div>
   );

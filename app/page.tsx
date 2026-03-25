@@ -29,7 +29,6 @@ export default function Home() {
           <h3 className="text-4xl">Your tasks. In flow.</h3>
         </div>
         <div className="text-center text-neutral-400">
-          <h4>Kanban board meets intelligent calendar.</h4>
           <h4>
             See progress at a glance. Plan your day without switching tabs.
             Everything stays in sync — automatically.
