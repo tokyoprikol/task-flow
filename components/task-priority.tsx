@@ -4,7 +4,7 @@ import { PRIORITIES } from "@/lib/configs/map-configs";
 export default function TaskPriority({ task }: { task: Task | undefined }) {
   return (
     <div
-      className={`flex items-center gap-1 rounded-sm p-1 text-sm ${
+      className={`flex items-center gap-1 rounded-sm p-1 text-xs ${
         task?.priority === "high"
           ? "bg-red-100 text-red-400 dark:bg-red-950 dark:text-red-300"
           : task?.priority === "medium"

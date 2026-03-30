@@ -42,7 +42,7 @@ export const COLORS: Record<string, string> = {
 };
 
 export const PRIORITIES: Record<string, ReactNode> = {
-  low: <ChevronDown className="size-4" />,
-  medium: <Minus className="size-4" />,
-  high: <ChevronUp className="size-4" />,
+  low: <ChevronDown size={13} />,
+  medium: <Minus size={13} />,
+  high: <ChevronUp size={13} />,
 };
